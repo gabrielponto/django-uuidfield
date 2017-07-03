@@ -1,7 +1,7 @@
 import uuid
 
 from django import forms
-from django.db.models import Field, SubfieldBase
+from django.db.models import Field
 try:
     from django.utils.encoding import smart_unicode
 except ImportError:
@@ -40,7 +40,6 @@ class UUIDField(Field):
     this with a DB constraint.
     """
     # TODO: support binary storage types
-    __metaclass__ = SubfieldBase
 
     def __init__(self, version=4, node=None, clock_seq=None,
                  namespace=None, name=None, auto=False, hyphenate=False,
@@ -168,6 +167,7 @@ class UUIDField(Field):
         # instance already to be able to get our StringUUID in.
         return StringUUID(smart_unicode(value), hyphenate=self.hyphenate)
 
+    
     def formfield(self, **kwargs):
         defaults = {
             'form_class': forms.CharField,
